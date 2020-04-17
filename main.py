@@ -18,7 +18,7 @@ nefullTable = fullTable.copy()
 for i in range(len(fullTable)):
     nefullTable[i] = fullTable[i][:-2:]
 
-input = nefullTable[0]  ##12 элементов
+input = nefullTable[0]  ##12 значений атрибутов
 neurons1 = [0 for i in range(0, 50)]  ##50 (1ый скрытый слой)
 neurons2 = [0 for i in range(0, 45)]  ##45 элементов(2ой скрытый)
 neurons3 = [0 for i in range(2)]  ##2 (выходной слой)
@@ -50,6 +50,7 @@ def totalError(nefullTable, weights1, weights2, weights3, fullTable):
         errorKGF += (neurons3[1] - float(fullTable[i][-1])) ** 2
     return max(errorG_total, errorKGF) / 2
 
+
 def derivative(y):
     return y * (1 - y)
 
@@ -70,11 +71,11 @@ def weightCorrection(weight, sigmaError, neurons):
             weight[j + i * len(neurons)] -= educationSpeed * sigmaError[i] * float(neurons[j])
     return weight
 
-currentError = totalError(nefullTable,weights1,weights2,weights3,fullTable)
-j=0
-while(currentError > 10000):
 
-    for i in range (0,60):
+currentError = totalError(nefullTable, weights1, weights2, weights3, fullTable)
+j = 0
+while (currentError > 10000):
+    for i in range(0, 60):
         input = nefullTable[i]
         neurons1 = layerActivationCounting(input, weights1)
         neurons2 = layerActivationCounting(neurons1, weights2)
@@ -86,16 +87,8 @@ while(currentError > 10000):
         weights1 = weightCorrection(weights1, sigma1Error, input)
         weights2 = weightCorrection(weights2, sigma2Error, neurons1)
         weights3 = weightCorrection(weights3, sigma3Error, neurons2)
-    currentError = totalError(nefullTable,weights1,weights2,weights3,fullTable)
-    j+=1
-    print("Текущая ошибка: "+ str(currentError)+" текущая итерация:"+str(j))
+
+    currentError = totalError(nefullTable, weights1, weights2, weights3, fullTable)
+    j += 1
+    print("Текущая ошибка: " + str(currentError) + " текущая итерация:" + str(j))
     print(weights3)
-
-
-
-
-
-
-
-
-
