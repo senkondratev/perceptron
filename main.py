@@ -1,4 +1,3 @@
-from time import time
 from math import exp
 
 educationSpeed = 1
@@ -55,12 +54,13 @@ def totalError(nefullTable, weights1, weights2, weights3, fullTable):
 def derivative(y):
     return y * (1 - y)
 
+
 def sigmaCounting(weight, previousErrors, neurons):
     currentError = [0 for i in range(len(neurons))]
     for i in range(len(neurons)):
         s = 0
         for j in range(len(previousErrors)):
-            s += previousErrors[j] * weight[i + len(neurons)*j] ##мб ошибка
+            s += previousErrors[j] * weight[i + len(neurons) * j]  ##мб ошибка
         currentError[i] = s * derivative(neurons[i])
     return currentError
 
@@ -70,6 +70,7 @@ def weightCorrection(weight, sigmaError, neurons):
         for j in range(len(neurons)):
             weight[j + i * len(neurons)] -= educationSpeed * sigmaError[i] * float(neurons[j])
     return weight
+
 currentError = totalError(nefullTable, weights1, weights2, weights3, fullTable)
 j = 0
 while (currentError > 10000):
