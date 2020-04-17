@@ -91,3 +91,4 @@ while (currentError > 10000):
     j += 1
     print("Текущая ошибка: " + str(currentError) + " текущая итерация:" + str(j))
     print(weights3)
+    ##fjvlnds
