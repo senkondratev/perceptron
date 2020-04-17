@@ -54,13 +54,12 @@ def totalError(nefullTable, weights1, weights2, weights3, fullTable):
 def derivative(y):
     return y * (1 - y)
 
-
 def sigmaCounting(weight, previousErrors, neurons):
     currentError = [0 for i in range(len(neurons))]
     for i in range(len(neurons)):
         s = 0
         for j in range(len(previousErrors)):
-            s += previousErrors[j] * weight[i + len(previousErrors)*j] ##мб ошибка
+            s += previousErrors[j] * weight[i + len(neurons)*j] ##мб ошибка
         currentError[i] = s * derivative(neurons[i])
     return currentError
 
