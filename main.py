@@ -1,9 +1,9 @@
 from math import exp
 
 alphach = 1
-weights1 = [0 for i in range(0, 600)]  ##600 элементов
-weights2 = [0 for i in range(0, 2250)]  ##2250 элементов
-weights3 = [0 for i in range(0, 90)]  ##50 элементов
+weights1 = [1 for i in range(0, 600)]  ##600 элементов
+weights2 = [1 for i in range(0, 2250)]  ##2250 элементов
+weights3 = [1 for i in range(0, 90)]  ##50 элементов
 
 sigma3Error = [0, 0]
 sigma2Error = [0 for i in range(0, 45)]
@@ -53,7 +53,6 @@ def derivative(y):
 
 
 neurons1 = nefullTable[0]
-neurons2 = layerActivationCounting(neurons1, weights1)
 neurons3 = layerActivationCounting(neurons2, weights2)
 neurons4 = layerActivationCounting(neurons3, weights3)
 print(derivative(neurons4[0]))
@@ -66,3 +65,9 @@ def sigmaCounting(weight, previousErrors, neurons):
         s = 0
         for j in range (len(previousErrors)):
             s += previousErrors[j]*weight[i*len(previousErrors)+j]
+        currentError[i] = s*derivative(neurons[i])
+    return currentError
+sigma2Error = sigmaCounting(weights3,sigma3Error, neurons3)
+sigma1Error = sigmaCounting(weights2,sigma2Error, neurons2)
+print(sigma1Error)
+print(sigma2Error)
