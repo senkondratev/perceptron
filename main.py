@@ -1,17 +1,19 @@
 from math import exp
+educationSpeed = 0.001
 
 alphach = 1
-weights1 = [1 for i in range(0, 600)]  ##600 элементов
-weights2 = [1 for i in range(0, 2250)]  ##2250 элементов
-weights3 = [1 for i in range(0, 90)]  ##50 элементов
+weights1 = [0.7 for i in range(0, 600)]  ##600 элементов
+weights2 = [0.7 for i in range(0, 2250)]  ##2250 элементов
+weights3 = [0.7 for i in range(0, 90)]  ##50 элементов
 
 sigma3Error = [0, 0]
 sigma2Error = [0 for i in range(0, 45)]
 sigma1Error = [0 for i in range(0, 50)]
 
+
 fullTable = []
-f = open("file.txt", "r")
-fullTable = [line.split() for line in f]
+f = open("table.csv", "r")
+fullTable = [line.split(',') for line in f]
 nefullTable = fullTable.copy()
 for i in range(len(fullTable)):
     nefullTable[i] = fullTable[i][:-2:]
@@ -46,16 +48,16 @@ def totalError(nefullTable, weights1, weights2, weights3, fullTable):
         neurons4 = layerActivationCounting(neurons3, weights3)
         errorG_total += (neurons4[0] - float(fullTable[i][-2])) ** 2
         errorKGF += (neurons4[1] - float(fullTable[i][-1])) ** 2
-    return max(errorG_total, errorKGF)
-
+    return max(errorG_total, errorKGF)/2
+print(totalError(nefullTable,weights1,weights2,weights3,fullTable))
 def derivative(y):
     return y * (1 - y)
 
 
 neurons1 = nefullTable[0]
+neurons2 = layerActivationCounting(neurons1, weights1)
 neurons3 = layerActivationCounting(neurons2, weights2)
 neurons4 = layerActivationCounting(neurons3, weights3)
-print(derivative(neurons4[0]))
 sigma3Error[0] = (neurons4[0] - float(fullTable[0][-2])) * derivative(neurons4[0])
 sigma3Error[1] = (neurons4[1] - float(fullTable[0][-1])) * derivative(neurons4[1])
 print(sigma3Error)
@@ -69,5 +71,8 @@ def sigmaCounting(weight, previousErrors, neurons):
     return currentError
 sigma2Error = sigmaCounting(weights3,sigma3Error, neurons3)
 sigma1Error = sigmaCounting(weights2,sigma2Error, neurons2)
-print(sigma1Error)
 print(sigma2Error)
+print(sigma1Error)
+def weightCorrection(weight, sigmaError, neurons):
+    return 1
+
