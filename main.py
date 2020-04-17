@@ -5,7 +5,7 @@ educationSpeed = 1
 alphach = 1
 weights1 = [0.7 for i in range(0, 600)]  ##600 элементов
 weights2 = [0.7 for i in range(0, 2250)]  ##2250 элементов
-weights3 = [0.7 for i in range(0, 90)]  ##50 элементов
+weights3 = [0.7 for i in range(0, 90)]  ##90 элементов
 
 sigma3Error = [0, 0]
 sigma2Error = [0 for i in range(0, 45)]
@@ -60,7 +60,7 @@ def sigmaCounting(weight, previousErrors, neurons):
     for i in range(len(neurons)):
         s = 0
         for j in range(len(previousErrors)):
-            s += previousErrors[j] * weight[i * len(previousErrors) + j]
+            s += previousErrors[j] * weight[i + len(previousErrors)*j] ##мб ошибка
         currentError[i] = s * derivative(neurons[i])
     return currentError
 
