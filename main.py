@@ -1,3 +1,4 @@
+from time import time
 from math import exp
 
 educationSpeed = 1
@@ -69,8 +70,6 @@ def weightCorrection(weight, sigmaError, neurons):
         for j in range(len(neurons)):
             weight[j + i * len(neurons)] -= educationSpeed * sigmaError[i] * float(neurons[j])
     return weight
-
-
 currentError = totalError(nefullTable, weights1, weights2, weights3, fullTable)
 j = 0
 while (currentError > 10000):
